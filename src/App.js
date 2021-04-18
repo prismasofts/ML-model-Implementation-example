@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import iris from "./assets/iris.jpg";
 
-function App() {
+const App = () => {
+  const [output, setOutput] = useState();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="header">
+        <u>Iris Species Predictor</u>
+      </div>
+      <img src={iris} alt="Iris Flower" style={{ marginBottom: "2%" }} />
+      <div className="spec_input_form">
+        <div className="form_header">
+          Input Following Specifics About The Flower To Predict
+        </div>
+        <div className="form_field">
+          <div className="form_label">Sepal Length(cm):</div>
+
+          <input className="form_input"></input>
+        </div>
+        <div className="form_field">
+          <div className="form_label">Sepal Width(cm):</div>
+
+          <input className="form_input"></input>
+        </div>
+        <div className="form_field">
+          <div className="form_label">Petal Length(cm):</div>
+
+          <input className="form_input"></input>
+        </div>
+        <div className="form_field">
+          <div className="form_label">Petal Width(cm):</div>
+
+          <input className="form_input"></input>
+        </div>
+      </div>
+      <div className="predicted_output">Predicted Iris Species:{output}</div>
     </div>
   );
-}
+};
 
 export default App;
