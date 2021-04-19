@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import pickle
 import json
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app)
+CORS(app, support_credentials=True)
+
 irismodel = pickle.load(open("iris_model.pkl", "rb"))
 
 
@@ -16,20 +17,22 @@ class Root(Resource):
 
 
 class PredictIris(Resource):
-    def get(self, petal_values):
+    def post(self):
         data = request.get_json()
-        datas = json.loads(data['petal_values'])
-        # print("petal values:", datas)
-        # print(type(datas[0][0]))
-        # irismodel = pickle.load(open("iris_model.pkl", "rb"))
-        predicted_result = irismodel.predict(datas)
-        # print("predicted result:", predicted_result)
-
-        return jsonify({'response': predicted_result[0]})
+        print("data", data['sl'])
+        sl = data['sl']
+        sw = data['sw']
+        pl = data['pl']
+        pw = data['pw']
+        predictData = [[sl, sw, pl, pw]]
+        print("predictData:", predictData)
+        predicted_result = irismodel.predict(predictData)
+        print("predicted result:", predicted_result)
+        return jsonify({'data': predicted_result[0]})
 
 
 api.add_resource(Root, '/')
-api.add_resource(PredictIris, '/predict/<string:petal_values>',
+api.add_resource(PredictIris, '/predict',
                  endpoint='predict')
 
 if __name__ == '__main__':
